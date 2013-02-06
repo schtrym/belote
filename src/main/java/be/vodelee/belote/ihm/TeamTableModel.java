@@ -41,9 +41,9 @@ public class TeamTableModel extends AbstractTableModel {
 				return team.getName();
 			}
 
-			for (int runIndex = 2; runIndex <= 2 + contest.getRuns().size() - 1; runIndex++) {
-				if (columnIndex == runIndex) {
-					return team.getScores().get(runIndex - 2);
+			for (int runIndex = 0; runIndex < contest.getRuns().size() ; runIndex++) {
+				if (columnIndex == runIndex + 2) {
+					return team.getScores().get(runIndex);
 				}
 			}
 
@@ -52,6 +52,49 @@ public class TeamTableModel extends AbstractTableModel {
 			}
 			return null;
 		}
+	}
+	
+	@Override
+	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+		System.out.println("update Value at row :" + rowIndex + " column :" +columnIndex);
+		Team team = contest.getTeams().get(rowIndex);
+		
+		if (columnIndex == 1) {
+			team.setName(aValue.toString());
+		}
+
+		for (int runIndex = 0; runIndex < contest.getRuns().size(); runIndex++) {
+			if (columnIndex == runIndex + 2) {
+				team.getScores().set(runIndex, (Integer) aValue);
+			}
+		}
+		
+		fireTableCellUpdated(rowIndex, columnIndex);
+		// update too the total
+		fireTableCellUpdated(rowIndex, getColumnCount()-1);
+	}
+
+	
+	
+	@Override
+	public Class<?> getColumnClass(int columnIndex) {
+		if (columnIndex == 0) {
+			return Integer.class;
+		}
+		if (columnIndex == 1) {
+			return String.class;
+		}
+
+		for (int runIndex = 0; runIndex < contest.getRuns().size(); runIndex++) {
+			if (columnIndex == runIndex +2) {
+				return Integer.class;
+			}
+		}
+
+		if (columnIndex == getColumnCount() - 1) {
+			return Integer.class;
+		}
+		return null;
 	}
 
 	@Override
@@ -63,9 +106,9 @@ public class TeamTableModel extends AbstractTableModel {
 			return "Nom";
 		}
 
-		for (int runIndex = 2; runIndex <= 2 + contest.getRuns().size() - 1; runIndex++) {
-			if (column == runIndex) {
-				return "Tour n°" + (runIndex - 1);
+		for (int runIndex = 0; runIndex < contest.getRuns().size(); runIndex++) {
+			if (column == runIndex + 2) {
+				return "Tour n°" + (runIndex + 1);
 			}
 		}
 
@@ -77,6 +120,11 @@ public class TeamTableModel extends AbstractTableModel {
 	}
 
 	public boolean isCellEditable(int row, int col) {
-		return true;
+		if (col > 0 && col < getColumnCount() - 1) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }
