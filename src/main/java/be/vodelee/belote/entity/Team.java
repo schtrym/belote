@@ -1,10 +1,14 @@
 package be.vodelee.belote.entity;
 
+import java.util.List;
+
 public class Team {
 
 	private int id;
-	
+
 	private String name;
+
+	private List<Integer> scores;
 
 	public int getId() {
 		return id;
@@ -22,5 +26,12 @@ public class Team {
 		this.name = name;
 	}
 
-	
+	public List<Integer> getScores() {
+		return scores;
+	}
+
+	public void setScores(List<Integer> scores) {
+		this.scores = scores;
+	}
+
 }
