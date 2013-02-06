@@ -1,19 +1,18 @@
 package be.vodelee.belote.entity;
 
-import java.util.Collection;
 import java.util.List;
 
 public class Contest {
 
-	Collection<Team> teams;
+	List<Team> teams;
 	
 	List<Run> runs;
 
-	public Collection<Team> getTeams() {
+	public List<Team> getTeams() {
 		return teams;
 	}
 
-	public void setTeams(Collection<Team> teams) {
+	public void setTeams(List<Team> teams) {
 		this.teams = teams;
 	}
 

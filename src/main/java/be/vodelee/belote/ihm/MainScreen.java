@@ -6,6 +6,9 @@ import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -13,8 +16,13 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.KeyStroke;
+
+import be.vodelee.belote.entity.Contest;
+import be.vodelee.belote.entity.Run;
 
 public class MainScreen extends JFrame implements ActionListener {
 
@@ -33,7 +41,7 @@ public class MainScreen extends JFrame implements ActionListener {
 	private JMenu jmHelp;
 	private JMenuItem jmiAbout;
 	private JTabbedPane jtp;
-	private Component inscriptionPanel;
+	private JPanel inscriptionPanel;
 	
 	public MainScreen() {
 		super("Belote Contest");
@@ -46,10 +54,25 @@ public class MainScreen extends JFrame implements ActionListener {
 		jtp = new JTabbedPane();
 		inscriptionPanel = new JPanel();
 		jtp.addTab("Equipes ", inscriptionPanel);
-		
 		container.add(jtp);
+		
+		Contest contest = new Contest();
+
+		List<Run>  runs = new ArrayList<Run>();
+		runs.add(new Run());
+		runs.add(new Run());
+		runs.add(new Run());
+		runs.add(new Run());
+		contest.setRuns(runs);
+		
+		TeamTableModel teamTableModel = new TeamTableModel(contest);
+		JTable teamTable = new JTable(teamTableModel);
+		JScrollPane jspTeamTable = new JScrollPane(teamTable);
+		inscriptionPanel.add(jspTeamTable, BorderLayout.CENTER);
+		
 		pack();
 	}
+	
 
 	private void buildMenu() {
 		jmb = new JMenuBar();
@@ -82,12 +105,11 @@ public class MainScreen extends JFrame implements ActionListener {
 		jmiAbout = new JMenuItem("Crédits");
 		jmiAbout.addActionListener(this);
 		jmHelp.add(jmiAbout);
-		
-		
 	}
 
+	
+	
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		if (e.getSource() == jmiAbout) {
 			System.out.println("test");
 			JOptionPane.showMessageDialog(container, "Payez une chope à Stefan !");
