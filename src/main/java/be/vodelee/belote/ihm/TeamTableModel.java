@@ -40,15 +40,14 @@ public class TeamTableModel extends AbstractTableModel {
 			case 1:
 				return team.getName();
 			}
-			
-			
-			for (int runIndex = 2 ; runIndex <= 2+ contest.getRuns().size() -1; runIndex ++) {
+
+			for (int runIndex = 2; runIndex <= 2 + contest.getRuns().size() - 1; runIndex++) {
 				if (columnIndex == runIndex) {
 					return team.getScores().get(runIndex - 2);
 				}
 			}
-			
-			if (columnIndex == getColumnCount() -1) {
+
+			if (columnIndex == getColumnCount() - 1) {
 				return team.getTotalScore();
 			}
 			return null;
@@ -63,19 +62,21 @@ public class TeamTableModel extends AbstractTableModel {
 		if (column == 1) {
 			return "Nom";
 		}
-		
-		for (int runIndex = 2 ; runIndex <= 2+ contest.getRuns().size() -1; runIndex ++) {
+
+		for (int runIndex = 2; runIndex <= 2 + contest.getRuns().size() - 1; runIndex++) {
 			if (column == runIndex) {
-				return "Tour n°"+ (runIndex-1);
+				return "Tour n°" + (runIndex - 1);
 			}
 		}
-		
-		if (column == getColumnCount() -1) {
+
+		if (column == getColumnCount() - 1) {
 			return "Total";
 		}
 		return null;
-		
+
 	}
 
-	
+	public boolean isCellEditable(int row, int col) {
+		return true;
+	}
 }
