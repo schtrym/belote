@@ -34,4 +34,16 @@ public class Team {
 		this.scores = scores;
 	}
 
+	public int getTotalScore() {
+		if (scores == null || scores.isEmpty()) {
+			return 0;
+		} else {
+			int total = 0;
+			for (Integer i : scores) {
+				int runscore = i == null ? 0 : i;
+				total = total + runscore;
+			}
+			return total;
+		}
+	}
 }
