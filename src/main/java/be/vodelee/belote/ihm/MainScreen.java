@@ -108,6 +108,7 @@ public class MainScreen extends JFrame implements ActionListener {
 		
 		this.teamTableModel = new TeamTableModel(contest);
 		JTable teamTable = new JTable(teamTableModel);
+		teamTable.setAutoCreateRowSorter(true);
 		JScrollPane jspTeamTable = new JScrollPane(teamTable);
 		inscriptionPanel.add(jspTeamTable, BorderLayout.CENTER);
 		
