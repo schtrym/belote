@@ -25,6 +25,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import org.w3c.dom.ls.LSInput;
 
 import be.vodelee.belote.controller.ContestController;
 import be.vodelee.belote.entity.Contest;
@@ -122,6 +126,22 @@ public class MainScreen extends JFrame implements ActionListener {
 			contest.getTeams().add(team);
 			teamTableModel.fireTableDataChanged();
 
+			// Update the label with number of teams.
+			totalTeamNbr.setText("Nombre d'équipe =" + contest.getTeams().size());
+		}
+		if (e.getSource() == deleteTeamButton) {
+			List<Team> teamsToRemove = new ArrayList<Team>();
+			for (int rowIndex :teamTable.getSelectedRows()) {
+				// retrieve the team id
+				int teamId = (Integer) teamTable.getValueAt(rowIndex, 0);
+				Team teamToRemove = new Team();
+				teamToRemove.setId(teamId);
+				teamsToRemove.add(teamToRemove);
+			}
+			contest.getTeams().removeAll(teamsToRemove);
+			
+			teamTableModel.fireTableDataChanged();
+			
 			// Update the label with number of teams.
 			totalTeamNbr.setText("Nombre d'équipe =" + contest.getTeams().size());
 		}

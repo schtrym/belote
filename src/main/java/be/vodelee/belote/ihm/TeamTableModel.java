@@ -56,7 +56,6 @@ public class TeamTableModel extends AbstractTableModel {
 	
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		System.out.println("update Value at row :" + rowIndex + " column :" +columnIndex);
 		Team team = contest.getTeams().get(rowIndex);
 		
 		if (columnIndex == 1) {
