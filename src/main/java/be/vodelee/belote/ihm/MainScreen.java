@@ -7,8 +7,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,15 +18,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
-import org.w3c.dom.ls.LSInput;
 
 import be.vodelee.belote.controller.ContestController;
 import be.vodelee.belote.entity.Contest;
@@ -55,12 +48,14 @@ public class MainScreen extends JFrame implements ActionListener {
 	private JMenu jmHelp;
 	private JMenuItem jmiAbout;
 	private JTabbedPane jtp;
+	private List<JPanel> runPanelList;
 	private JPanel inscriptionPanel;
 	private JLabel totalTeamNbr;
 	private JPanel inscriptionButtonsPanel;
 	private JButton newTeamButton;
 	private JButton deleteTeamButton;
-	private JButton generateTournamentButton;
+	private JButton generateOneRun;
+	private JButton removeOneRun;
 
 	private TeamTableModel teamTableModel;
 
@@ -80,6 +75,7 @@ public class MainScreen extends JFrame implements ActionListener {
 		jtp = new JTabbedPane();
 		inscriptionPanel = new JPanel();
 		jtp.addTab("Equipes ", inscriptionPanel);
+		runPanelList = new ArrayList<JPanel>();
 		container.add(jtp);
 
 		totalTeamNbr = new JLabel("Nombre d'équipe = " + contest.getTeams().size());
@@ -96,14 +92,12 @@ public class MainScreen extends JFrame implements ActionListener {
 		deleteTeamButton = new JButton("Supprimer une équipe");
 		deleteTeamButton.addActionListener(this);
 		inscriptionButtonsPanel.add(deleteTeamButton);
-		generateTournamentButton = new JButton("Commencer le tournoi");
-		generateTournamentButton.addActionListener(this);
-		inscriptionButtonsPanel.add(generateTournamentButton);
-		// backToInscriptionButton = new
-		// JButton("Retourner dans la phase d'inscription");
-		// backToInscriptionButton.addActionListener(this);
-		// backToInscriptionButton.setEnabled(false);
-		// inscriptionButtonsPanel.add(backToInscriptionButton);
+		generateOneRun = new JButton("Generer un tour");
+		generateOneRun.addActionListener(this);
+		inscriptionButtonsPanel.add(generateOneRun);
+		removeOneRun = new JButton("Supprimer le derniertour");
+		removeOneRun.addActionListener(this);
+		inscriptionButtonsPanel.add(removeOneRun);
 
 		this.teamTableModel = new TeamTableModel(contest);
 		teamTable = new JTable(teamTableModel);
@@ -144,6 +138,28 @@ public class MainScreen extends JFrame implements ActionListener {
 			
 			// Update the label with number of teams.
 			totalTeamNbr.setText("Nombre d'équipe =" + contest.getTeams().size());
+		}
+		if (e.getSource() == generateOneRun) {
+			if (contest.getTeams().size()%2 != 0) {
+				JOptionPane.showMessageDialog(container, "Il faut un nombre d'équipe pair pour générer un tour !");
+			}
+			else {
+				newTeamButton.setEnabled(false);
+				deleteTeamButton.setEnabled(false);
+				// TODO put logic to build a run.
+				Run run = new Run();
+				for (Team t : contest.getTeams()) {
+					t.getScores().add(null);
+				}
+				contest.getRuns().add(run);
+				
+				// Build interface;
+				JPanel runPanel = new JPanel();
+				jtp.add("Tour n°" +contest.getRuns().size() , runPanel);
+				
+				// Update the table structure.
+				teamTableModel.fireTableStructureChanged();
+			}
 		}
 	}
 
