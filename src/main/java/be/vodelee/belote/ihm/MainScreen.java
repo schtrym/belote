@@ -78,7 +78,7 @@ public class MainScreen extends JFrame implements ActionListener {
 		jtp.addTab("Equipes ", inscriptionPanel);
 		container.add(jtp);
 
-		totalTeamNbr = new JLabel("Nombre d'équipe = "+ contest.getTeams().size());
+		totalTeamNbr = new JLabel("Nombre d'équipe = " + contest.getTeams().size());
 		totalTeamNbr.setFont(new Font("Serif", Font.BOLD | Font.ITALIC, 35));
 		inscriptionPanel.setLayout(new BorderLayout());
 		inscriptionPanel.add(totalTeamNbr, BorderLayout.NORTH);
@@ -89,10 +89,9 @@ public class MainScreen extends JFrame implements ActionListener {
 		newTeamButton = new JButton("Ajouter une équipe");
 		newTeamButton.addActionListener(this);
 		inscriptionButtonsPanel.add(newTeamButton);
-		// inscriptionButtonsPanel.add(updateTeamButton);
-		// deleteTeamButton = new JButton("Supprimer une équipe");
-		// deleteTeamButton.addActionListener(this);
-		// inscriptionButtonsPanel.add(deleteTeamButton);
+		deleteTeamButton = new JButton("Supprimer une équipe");
+		deleteTeamButton.addActionListener(this);
+		inscriptionButtonsPanel.add(deleteTeamButton);
 		generateTournamentButton = new JButton("Commencer le tournoi");
 		generateTournamentButton.addActionListener(this);
 		inscriptionButtonsPanel.add(generateTournamentButton);
@@ -122,9 +121,9 @@ public class MainScreen extends JFrame implements ActionListener {
 			team.setScores(new ArrayList<Integer>());
 			contest.getTeams().add(team);
 			teamTableModel.fireTableDataChanged();
-			
+
 			// Update the label with number of teams.
-			totalTeamNbr.setText("Nombre d'équipe ="  + contest.getTeams().size());
+			totalTeamNbr.setText("Nombre d'équipe =" + contest.getTeams().size());
 		}
 	}
 
