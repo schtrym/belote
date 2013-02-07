@@ -125,7 +125,7 @@ public class MainScreen extends JFrame implements ActionListener {
 		}
 		if (e.getSource() == deleteTeamButton) {
 			List<Team> teamsToRemove = new ArrayList<Team>();
-			for (int rowIndex :teamTable.getSelectedRows()) {
+			for (int rowIndex : teamTable.getSelectedRows()) {
 				// retrieve the team id
 				int teamId = (Integer) teamTable.getValueAt(rowIndex, 0);
 				Team teamToRemove = new Team();
@@ -133,17 +133,18 @@ public class MainScreen extends JFrame implements ActionListener {
 				teamsToRemove.add(teamToRemove);
 			}
 			contest.getTeams().removeAll(teamsToRemove);
-			
+
 			teamTableModel.fireTableDataChanged();
-			
+
 			// Update the label with number of teams.
 			totalTeamNbr.setText("Nombre d'équipe =" + contest.getTeams().size());
 		}
 		if (e.getSource() == generateOneRun) {
-			if (contest.getTeams().size()%2 != 0) {
+			if (contest.getTeams().size() == 0) {
+				JOptionPane.showMessageDialog(container, "Il faut au moins 2 équipe pour générer un tour !");
+			} else if (contest.getTeams().size() % 2 != 0) {
 				JOptionPane.showMessageDialog(container, "Il faut un nombre d'équipe pair pour générer un tour !");
-			}
-			else {
+			} else {
 				newTeamButton.setEnabled(false);
 				deleteTeamButton.setEnabled(false);
 				// TODO put logic to build a run.
@@ -152,11 +153,11 @@ public class MainScreen extends JFrame implements ActionListener {
 					t.getScores().add(null);
 				}
 				contest.getRuns().add(run);
-				
+
 				// Build interface;
 				JPanel runPanel = new JPanel();
-				jtp.add("Tour n°" +contest.getRuns().size() , runPanel);
-				
+				jtp.add("Tour n°" + contest.getRuns().size(), runPanel);
+
 				// Update the table structure.
 				teamTableModel.fireTableStructureChanged();
 			}
