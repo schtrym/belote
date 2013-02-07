@@ -31,7 +31,7 @@ import be.vodelee.belote.entity.Contest;
 import be.vodelee.belote.entity.Run;
 import be.vodelee.belote.entity.Team;
 
-public class MainScreen extends JFrame implements ActionListener, MouseListener {
+public class MainScreen extends JFrame implements ActionListener {
 
 	/**
 	 * 
@@ -55,7 +55,6 @@ public class MainScreen extends JFrame implements ActionListener, MouseListener 
 	private JLabel totalTeamNbr;
 	private JPanel inscriptionButtonsPanel;
 	private JButton newTeamButton;
-	private JButton updateTeamButton;
 	private JButton deleteTeamButton;
 	private JButton generateTournamentButton;
 
@@ -79,7 +78,7 @@ public class MainScreen extends JFrame implements ActionListener, MouseListener 
 		jtp.addTab("Equipes ", inscriptionPanel);
 		container.add(jtp);
 
-		totalTeamNbr = new JLabel("Nombre d'équipe =0    Joueurs =0");
+		totalTeamNbr = new JLabel("Nombre d'équipe = "+ contest.getTeams().size());
 		totalTeamNbr.setFont(new Font("Serif", Font.BOLD | Font.ITALIC, 35));
 		inscriptionPanel.setLayout(new BorderLayout());
 		inscriptionPanel.add(totalTeamNbr, BorderLayout.NORTH);
@@ -90,8 +89,6 @@ public class MainScreen extends JFrame implements ActionListener, MouseListener 
 		newTeamButton = new JButton("Ajouter une équipe");
 		newTeamButton.addActionListener(this);
 		inscriptionButtonsPanel.add(newTeamButton);
-		// updateTeamButton = new JButton("Modifier une équipe");
-		// updateTeamButton.addActionListener(this);
 		// inscriptionButtonsPanel.add(updateTeamButton);
 		// deleteTeamButton = new JButton("Supprimer une équipe");
 		// deleteTeamButton.addActionListener(this);
@@ -108,7 +105,6 @@ public class MainScreen extends JFrame implements ActionListener, MouseListener 
 		this.teamTableModel = new TeamTableModel(contest);
 		teamTable = new JTable(teamTableModel);
 		teamTable.setAutoCreateRowSorter(true);
-		teamTable.addMouseListener(this);
 		JScrollPane jspTeamTable = new JScrollPane(teamTable);
 		inscriptionPanel.add(jspTeamTable, BorderLayout.CENTER);
 
@@ -126,6 +122,9 @@ public class MainScreen extends JFrame implements ActionListener, MouseListener 
 			team.setScores(new ArrayList<Integer>());
 			contest.getTeams().add(team);
 			teamTableModel.fireTableDataChanged();
+			
+			// Update the label with number of teams.
+			totalTeamNbr.setText("Nombre d'équipe ="  + contest.getTeams().size());
 		}
 	}
 
@@ -160,26 +159,5 @@ public class MainScreen extends JFrame implements ActionListener, MouseListener 
 		jmiAbout = new JMenuItem("Crédits");
 		jmiAbout.addActionListener(this);
 		jmHelp.add(jmiAbout);
-	}
-
-	public void mouseClicked(MouseEvent e) {
-		if (e.getButton() == MouseEvent.BUTTON3) {
-		}
-	}
-
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
-
-	public void mouseReleased(MouseEvent e) {
-		// do nothing
-	}
-
-	public void mouseEntered(MouseEvent e) {
-		// do nothing
-	}
-
-	public void mouseExited(MouseEvent e) {
-		// do nothing
 	}
 }
