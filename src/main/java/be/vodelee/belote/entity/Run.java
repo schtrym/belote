@@ -19,6 +19,9 @@ public class Run implements Serializable {
 	public void setGames(List<Game> games) {
 		this.games = games;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Run [games=" + games + "]";
+	}
 }
