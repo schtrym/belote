@@ -149,7 +149,6 @@ public class MainScreen extends JFrame implements ActionListener {
 			} else {
 				newTeamButton.setEnabled(false);
 				deleteTeamButton.setEnabled(false);
-				// TODO put logic to build a run.
 				Run run = new RunController().buildRun(contest.getTeams(), contest.getRuns());
 				run.setRunId(contest.getRuns().size());
 				for (Team t : contest.getTeams()) {
