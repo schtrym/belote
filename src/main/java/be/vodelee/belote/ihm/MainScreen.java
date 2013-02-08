@@ -24,6 +24,7 @@ import javax.swing.JTable;
 import javax.swing.KeyStroke;
 
 import be.vodelee.belote.controller.ContestController;
+import be.vodelee.belote.controller.RunController;
 import be.vodelee.belote.entity.Contest;
 import be.vodelee.belote.entity.Run;
 import be.vodelee.belote.entity.Team;
@@ -101,6 +102,7 @@ public class MainScreen extends JFrame implements ActionListener {
 
 		this.teamTableModel = new TeamTableModel(contest);
 		teamTable = new JTable(teamTableModel);
+		teamTable.getTableHeader().setReorderingAllowed(false);
 		teamTable.setAutoCreateRowSorter(true);
 		JScrollPane jspTeamTable = new JScrollPane(teamTable);
 		inscriptionPanel.add(jspTeamTable, BorderLayout.CENTER);
@@ -148,7 +150,8 @@ public class MainScreen extends JFrame implements ActionListener {
 				newTeamButton.setEnabled(false);
 				deleteTeamButton.setEnabled(false);
 				// TODO put logic to build a run.
-				Run run = new Run();
+				Run run = new RunController().buildRun(contest.getTeams(), contest.getRuns());
+				run.setRunId(contest.getRuns().size());
 				for (Team t : contest.getTeams()) {
 					t.getScores().add(null);
 				}
@@ -156,6 +159,11 @@ public class MainScreen extends JFrame implements ActionListener {
 
 				// Build interface;
 				JPanel runPanel = new JPanel();
+				RunTableModel runTableModel = new RunTableModel(run, teamTableModel);
+				JTable runTable = new JTable(runTableModel);
+				runTable.getTableHeader().setReorderingAllowed(false);
+				JScrollPane runSP = new JScrollPane(runTable);
+				runPanel.add(runSP, BorderLayout.CENTER);
 				jtp.add("Tour n°" + contest.getRuns().size(), runPanel);
 
 				// Update the table structure.
