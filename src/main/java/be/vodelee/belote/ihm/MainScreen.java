@@ -22,6 +22,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
+import javax.xml.transform.Templates;
 
 import be.vodelee.belote.controller.ContestController;
 import be.vodelee.belote.controller.RunController;
@@ -167,6 +168,17 @@ public class MainScreen extends JFrame implements ActionListener {
 
 				// Update the table structure.
 				teamTableModel.fireTableStructureChanged();
+				removeOneRun.setEnabled(true);
+			}
+		}
+		if ( e.getSource() == removeOneRun ){
+			jtp.remove(contest.getRuns().size());
+			contest.getRuns().remove(contest.getRuns().size()-1);
+			teamTableModel.fireTableStructureChanged();
+			if (contest.getRuns().size() == 0) {
+				newTeamButton.setEnabled(true);
+				deleteTeamButton.setEnabled(true);
+				removeOneRun.setEnabled(false);
 			}
 		}
 	}

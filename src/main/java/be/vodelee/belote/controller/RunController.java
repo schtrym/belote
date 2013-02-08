@@ -2,6 +2,7 @@ package be.vodelee.belote.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import be.vodelee.belote.entity.Game;
 import be.vodelee.belote.entity.Run;
@@ -14,29 +15,37 @@ public class RunController {
 		run.setGames(new ArrayList<Game>());
 
 		// # of game in a run = # team /2
-//		int numberOfGames = (Integer) teamList.size() / 2;
+		// int numberOfGames = (Integer) teamList.size() / 2;
 
 		List<TeamWithAlreadyPlayedTeamList> teamWithAlreadyPlayedTeamList = buildAlreadyPlayedList(teamList, runList);
-
+		int plantage = 0;
+		
 		boolean isEveryTeamAssigned = false;
-		while (!isEveryTeamAssigned) {
-			Game game = new Game();
-			boolean isGameValid = false;
-			game.setTeam1(teamWithAlreadyPlayedTeamList.remove(0).getTeam());
-			int i=0;
-			while (!isGameValid) {
-				if (!teamWithAlreadyPlayedTeamList.get(i).getAlreadyPlayedList()
-						.contains(game.getTeam1())) {
-					game.setTeam2(teamWithAlreadyPlayedTeamList.remove(i).getTeam());
-					isGameValid = true;
-				} else {
-					i++;
+		label : while (!isEveryTeamAssigned) {
+			try {
+				Game game = new Game();
+				boolean isGameValid = false;
+				game.setTeam1(teamWithAlreadyPlayedTeamList.remove(0).getTeam());
+				Random r = new Random();
+				int i = r.nextInt(teamWithAlreadyPlayedTeamList.size());
+				while (!isGameValid) {
+					if (!teamWithAlreadyPlayedTeamList.get(i).getAlreadyPlayedList().contains(game.getTeam1())) {
+						game.setTeam2(teamWithAlreadyPlayedTeamList.remove(i).getTeam());
+						isGameValid = true;
+					} else {
+						i++;
+					}
 				}
-			}
-			run.getGames().add(game);
+				run.getGames().add(game);
 
-			if (teamWithAlreadyPlayedTeamList.isEmpty()) {
-				isEveryTeamAssigned = true;
+				if (teamWithAlreadyPlayedTeamList.isEmpty()) {
+					isEveryTeamAssigned = true;
+				}
+			} catch (Exception e) {
+				System.err.println(plantage++);
+				//TODO Fix this with a proper while loop
+				teamWithAlreadyPlayedTeamList = buildAlreadyPlayedList(teamList, runList);
+				continue label;
 			}
 		}
 
@@ -86,5 +95,11 @@ public class RunController {
 		public void setAlreadyPlayedList(List<Team> alreadyPlayedList) {
 			this.alreadyPlayedList = alreadyPlayedList;
 		}
+
+		@Override
+		public String toString() {
+			return "TeamWithAlreadyPlayedTeamList [team=" + team + ", alreadyPlayedList=" + alreadyPlayedList + "]";
+		}
+
 	}
 }
