@@ -80,6 +80,12 @@ public class Game implements Serializable {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Game [team1=" + team1 + ", team2=" + team2 + ", scoreTeam1=" + scoreTeam1 + ", scoreTeam2="
+				+ scoreTeam2 + "]";
+	}
 	
 	
 }
