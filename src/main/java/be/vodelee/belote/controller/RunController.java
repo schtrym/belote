@@ -45,6 +45,7 @@ public class RunController {
 				System.err.println(plantage++);
 				//TODO Fix this with a proper while loop
 				teamWithAlreadyPlayedTeamList = buildAlreadyPlayedList(teamList, runList);
+				// TODO bug : reset the game list
 				continue label;
 			}
 		}
