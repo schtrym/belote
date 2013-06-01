@@ -1,0 +1,14 @@
+
+TODO : Changer le comtage des points : aller jusque 101 et pas 1001.
+TODO : improvment, pouvoir entrer les points dans l'écran des runs = bcp plus facile quand on doit rentrer les points (moins error prone)
+TODO : improvment : changer le titre de l'écran principal : Belote contest ==> Tournoi de belote
+
+Bug : 
+Lorsqu'on génère un tour, parfois, il y a bcp trop de match... ==> peut etre lorsqu'on retry apres une exception ==> oubli de vider la liste des matchs?
+
+
+
+Reglement :
+
+TODO : Ajouter au reglement le cas où le carré et une tierce partage la meme carte.
+TODO : mettre dans le reglement qui va gagner le concours. Comment on va déterminer le vainqueur.
